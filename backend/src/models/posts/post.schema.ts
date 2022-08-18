@@ -15,7 +15,7 @@ export class Post {
   @Prop({ default: () => new Date() })
   date: Date;
 
-  @Prop({ type: Types.ObjectId, ref: 'Owner' })
+  @Prop({ type: Types.ObjectId, ref: 'User' })
   author: User;
 
   @Prop({ default: () => 0 })

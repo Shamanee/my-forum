@@ -7,6 +7,9 @@ import { UsersService } from './services/users.service';
 import { Post, PostSchema } from './models/posts/post.schema';
 import { PostsController } from './controllers/posts.controller';
 import { PostsService } from './services/posts.service';
+import { CommentsController } from './controllers/comments.controller';
+import { CommentsService } from './services/comments.service';
+import { Comment, CommentSchema } from './models/comments/comment.schema';
 
 @Module({
   imports: [
@@ -16,9 +19,15 @@ import { PostsService } from './services/posts.service';
     MongooseModule.forFeature([
       { name: User.name, schema: UserSchema },
       { name: Post.name, schema: PostSchema },
+      { name: Comment.name, schema: CommentSchema },
     ]),
   ],
-  controllers: [AppController, UsersController, PostsController],
-  providers: [UsersService, PostsService],
+  controllers: [
+    AppController,
+    UsersController,
+    PostsController,
+    CommentsController,
+  ],
+  providers: [UsersService, PostsService, CommentsService],
 })
 export class AppModule {}
