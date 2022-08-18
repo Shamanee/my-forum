@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { CreateUserDto } from '../models/users/dto/create-user.dto';
 import { UpdateUserDto } from '../models/users/dto/update-user.dto';
 import { UsersService } from '../services/users.service';
-import { UserInterface } from '../models/users/interfaces/user.interface';
+import { User } from '../models/users/user.schema';
 
 @Controller('users')
 export class UsersController {
@@ -14,17 +14,17 @@ export class UsersController {
   }
 
   @Get()
-  async findAll(): Promise<UserInterface[]> {
+  async findAll(): Promise<User[]> {
     return this.usersService.findAll();
   }
 
   @Post('users-by-id')
-  async findInArray(@Body() userIds: string[]): Promise<UserInterface[]> {
+  async findInArray(@Body() userIds: string[]): Promise<User[]> {
     return this.usersService.findWithArray(userIds);
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<UserInterface> {
+  async findOne(@Param('id') id: string): Promise<User> {
     return this.usersService.find(id);
   }
 
@@ -32,7 +32,7 @@ export class UsersController {
   async update(
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
-  ): Promise<UserInterface> {
+  ): Promise<User> {
     return this.usersService.updateOne(id, updateUserDto);
   }
 
