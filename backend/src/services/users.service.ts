@@ -5,8 +5,23 @@ import { User, UserDocument } from '../models/users/user.schema';
 import { CreateUserDto } from '../models/users/dto/create-user.dto';
 import { UpdateUserDto } from '../models/users/dto/update-user.dto';
 
+export type UserType = any;
+
 @Injectable()
 export class UsersService {
+  // private readonly users = [
+  //   {
+  //     userId: 1,
+  //     username: 'john',
+  //     password: 'password',
+  //   },
+  //   {
+  //     userId: 2,
+  //     username: 'maria',
+  //     password: 'guess',
+  //   },
+  // ];
+
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
   ) {}
@@ -36,6 +51,10 @@ export class UsersService {
       throw new NotFoundException();
     }
     return user;
+  }
+
+  async findOneWithPassword(username: string): Promise<UserDocument> {
+    return await this.userModel.findOne({ username }).exec();
   }
 
   async updateOne(userId: string, updateUserDto: UpdateUserDto) {

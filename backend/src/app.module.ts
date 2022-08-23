@@ -10,6 +10,7 @@ import { PostsService } from './services/posts.service';
 import { CommentsController } from './controllers/comments.controller';
 import { CommentsService } from './services/comments.service';
 import { Comment, CommentSchema } from './models/comments/comment.schema';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { Comment, CommentSchema } from './models/comments/comment.schema';
       { name: Post.name, schema: PostSchema },
       { name: Comment.name, schema: CommentSchema },
     ]),
+    AuthModule,
   ],
   controllers: [
     AppController,
