@@ -1,8 +1,8 @@
-import { User } from '../../users/user.schema';
+import { IsString } from 'class-validator';
 
 export class CreatePostDto {
+  @IsString()
   title: string;
+  @IsString()
   text: string;
-  date: Date;
-  author: User;
 }

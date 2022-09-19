@@ -3,14 +3,21 @@ import { CreateUserDto } from '../models/users/dto/create-user.dto';
 import { UpdateUserDto } from '../models/users/dto/update-user.dto';
 import { UsersService } from '../services/users.service';
 import { User } from '../models/users/user.schema';
+import { AuthService } from '../auth/auth.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private readonly authService: AuthService,
+  ) {}
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto): Promise<void> {
-    await this.usersService.create(createUserDto);
+    await this.usersService.create({
+      username: createUserDto.username,
+      password: await this.authService.hashPassword(createUserDto.password),
+    });
   }
 
   @Get()

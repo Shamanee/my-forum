@@ -1,17 +1,22 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes } from '@nestjs/common';
 import { CreatePostDto } from '../models/posts/dto/create-post.dto';
 import { UpdatePostDto } from '../models/posts/dto/update-post.dto';
 import { PostsService } from '../services/posts.service';
 import { Post as PostSchema } from '../models/posts/post.schema';
 import { Observable, of } from 'rxjs';
+import { CurrentUser } from '../auth/current-user.decorator';
+import { UserDocument } from '../models/users/user.schema';
 
 @Controller('posts')
 export class PostsController {
   constructor(private postsService: PostsService) {}
 
   @Post()
-  async create(@Body() createPostDto: CreatePostDto): Promise<void> {
-    await this.postsService.create(createPostDto);
+  async create(
+    @Body() createPostDto: CreatePostDto,
+    @CurrentUser() user: UserDocument,
+  ): Promise<void> {
+    await this.postsService.create(createPostDto, user._id);
   }
 
   @Get()

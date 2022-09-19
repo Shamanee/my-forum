@@ -4,14 +4,19 @@ import { UpdateCommentDto } from '../models/comments/dto/update-comment.dto';
 import { CommentsService } from '../services/comments.service';
 import { Comment as Comment } from '../models/comments/comment.schema';
 import { Observable, of } from 'rxjs';
+import { CurrentUser } from '../auth/current-user.decorator';
+import { UserDocument } from '../models/users/user.schema';
 
 @Controller('comments')
 export class CommentsController {
   constructor(private commentsService: CommentsService) {}
 
   @Post()
-  async create(@Body() createCommentDto: CreateCommentDto): Promise<void> {
-    await this.commentsService.create(createCommentDto);
+  async create(
+    @Body() createCommentDto: CreateCommentDto,
+    @CurrentUser() user: UserDocument,
+  ): Promise<void> {
+    await this.commentsService.create(createCommentDto, user._id);
   }
 
   @Get()

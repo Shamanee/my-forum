@@ -4,6 +4,7 @@ import { Model, Types } from 'mongoose';
 import { User, UserDocument } from '../models/users/user.schema';
 import { CreateUserDto } from '../models/users/dto/create-user.dto';
 import { UpdateUserDto } from '../models/users/dto/update-user.dto';
+// import { AuthService } from '../auth/auth.service';
 
 export type UserType = any;
 
@@ -24,6 +25,7 @@ export class UsersService {
 
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    // private readonly authService: AuthService,
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {

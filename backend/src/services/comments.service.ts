@@ -12,8 +12,16 @@ export class CommentsService {
     private readonly commentModel: Model<CommentDocument>,
   ) {}
 
-  async create(createCommentDto: CreateCommentDto): Promise<Comment> {
-    const createdComment = new this.commentModel(createCommentDto);
+  async create(
+    createCommentDto: CreateCommentDto,
+    userId: string,
+  ): Promise<Comment> {
+    const createdComment = new this.commentModel({
+      text: createCommentDto.text,
+      post: new Types.ObjectId(createCommentDto.post),
+      author: new Types.ObjectId(userId),
+    });
+    console.log(createdComment);
     return createdComment.save();
   }
 

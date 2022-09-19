@@ -11,6 +11,8 @@ import { CommentsController } from './controllers/comments.controller';
 import { CommentsService } from './services/comments.service';
 import { Comment, CommentSchema } from './models/comments/comment.schema';
 import { AuthModule } from './auth/auth.module';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -30,6 +32,14 @@ import { AuthModule } from './auth/auth.module';
     PostsController,
     CommentsController,
   ],
-  providers: [UsersService, PostsService, CommentsService],
+  providers: [
+    UsersService,
+    PostsService,
+    CommentsService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
 export class AppModule {}

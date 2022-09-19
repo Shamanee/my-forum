@@ -11,8 +11,12 @@ export class PostsService {
     @InjectModel(Post.name) private readonly postModel: Model<PostDocument>,
   ) {}
 
-  async create(createPostDto: CreatePostDto): Promise<Post> {
-    const createdPost = new this.postModel(createPostDto);
+  async create(createPostDto: CreatePostDto, userId: string): Promise<Post> {
+    const createdPost = new this.postModel({
+      title: createPostDto.title,
+      text: createPostDto.text,
+      author: new Types.ObjectId(userId),
+    });
     return createdPost.save();
   }
 
